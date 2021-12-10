@@ -7,7 +7,7 @@ import wandb
 import typer
 import torch
 
-# wandb.init(project="test-wandb", entity="nsorros")
+wandb.init(project="test-wandb", entity="nsorros")
 
 
 class ToxicityDataset(torch.utils.data.Dataset):
@@ -76,6 +76,16 @@ def train(
     bidirectional: bool = True,
     num_classes: int = 8,
 ):
+    wandb.config = {
+        "learning_rate": learning_rate,
+        "batch_size": batch_size,
+        "epochs": epochs,
+        "vocabulary_size": vocabulary_size,
+        "embedding_size": embedding_size,
+        "hidden_size": hidden_size,
+        "num_layers": num_layers,
+        "bidirectional": bidirectional,
+    }
     dataset = ToxicityDataset(data_path)
     data = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
@@ -93,7 +103,7 @@ def train(
 
     for epoch in range(epochs):
         batches = tqdm(
-            data, desc=f"Epoch {epoch:2d}/{epochs:2d}", leave=False, disable=False
+            data, desc=f"Epoch {epoch:2d}/{epochs:2d}"
         )
         for batch in tqdm(batches):
             inputs, labels = batch
@@ -106,6 +116,7 @@ def train(
             optimizer.step()
 
             batches.set_postfix({"loss": "{:.5f}".format(loss.item() / len(batch))})
+            wandb.log({"loss": loss.item()})
 
     torch.save(model, model_path)
 
