@@ -6,3 +6,9 @@ data/
 
 # Models
 models/
+
+# wanb
+wandb
+
+# Python artifacts
+__pycache__

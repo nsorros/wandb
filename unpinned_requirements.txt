@@ -4,3 +4,4 @@ transformers
 sklearn
 torch
 typer
+tqdm
