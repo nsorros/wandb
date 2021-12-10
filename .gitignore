@@ -3,3 +3,6 @@ venv
 
 # Data
 data/
+
+# Models
+models/

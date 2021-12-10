@@ -1,1 +1,6 @@
+black
 wandb
+transformers
+sklearn
+torch
+typer
