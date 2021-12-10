@@ -76,7 +76,7 @@ def train(
     bidirectional: bool = True,
     num_classes: int = 8,
 ):
-    wandb.config = {
+    wandb.config.update({
         "learning_rate": learning_rate,
         "batch_size": batch_size,
         "epochs": epochs,
@@ -85,7 +85,7 @@ def train(
         "hidden_size": hidden_size,
         "num_layers": num_layers,
         "bidirectional": bidirectional,
-    }
+    })
     dataset = ToxicityDataset(data_path)
     data = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
